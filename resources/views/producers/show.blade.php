@@ -1,4 +1,4 @@
-@extends('layouts.app',['pageSlug' => 'actors'])
+@extends('layouts.app',['pageSlug' => 'producers'])
 
 @section('content')
     <div class="col-md-4">
@@ -12,35 +12,35 @@
                         <div class="block block-four"></div>
                         <a href="#">
                             <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png" alt="">
-                            <h5 class="title">{{ $actor->name }}</h5>
+                            <h5 class="title">{{ $producer->name }}</h5>
                         </a>
                 <p class="description">
                     Gender :
-                    @if($actor->sex === 'F')
+                    @if($producer->sex === 'F')
                         @php echo 'Female'; @endphp
-                    @elseif($actor->sex === 'M')
+                    @elseif($producer->sex === 'M')
                         @php echo 'Male'; @endphp
                     @else
                         @php echo 'Other'; @endphp
                     @endif
                     <br>
-                    Date Of Birth : {{ $actor->dob }}
+                    Date Of Birth : {{ $producer->dob }}
                 </p>
             </div>
             </p>
             <div class="card-description text-justify">
-                {{ $actor->bio }}
+                {{ $producer->bio }}
             </div>
         </div>
         <div class="card-footer">
             <div class="button-container">
-                <a class="btn btn-icon btn-round" title="Edit" href="{{route('actors.update',$actor->id)}}">
+                <a class="btn btn-icon btn-round" title="Edit" href="{{route('producers.update',$producer->id)}}">
                     <i class="tim-icons icon-pencil"></i>
                 </a>
-                <a class="btn btn-icon btn-round" title="Back" href="{{route('actors.index')}}">
+                <a class="btn btn-icon btn-round" title="Back" href="{{route('producers.index')}}">
                     <i class="tim-icons icon-minimal-left"></i>
                 </a>
-                <a class="btn btn-icon btn-round" data-toggle="modal" data-target="#{{ $actor->id }}" title="Delete" href="#" id="del">
+                <a class="btn btn-icon btn-round" data-toggle="modal" data-target="#{{ $producer->id }}" title="Delete" href="#" id="del">
                     <i class="tim-icons icon-trash-simple"></i>
                 </a>
             </div>

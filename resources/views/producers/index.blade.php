@@ -1,4 +1,4 @@
-@extends('layouts.app',['pageSlug' => 'actors'])
+@extends('layouts.app',['pageSlug' => 'producers'])
 
 @section('content')
 
@@ -8,10 +8,10 @@
                 <div class="card-header ">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h2 class="card-title">Actors</h2>
+                            <h2 class="card-title">Producers</h2>
                         </div>
                     </div>
-                    <a href="{{route('actors.create')}}" class="btn btn-fill btn-primary float-right">{{ __('Add') }}</a>
+                    <a href="{{route('producers.create')}}" class="btn btn-fill btn-primary float-right">{{ __('Add') }}</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -33,28 +33,28 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($actors as $actor)
+                            @foreach($producers as $producer)
                             <tr>
                                 <td>
-                                    <a href="{{route('actors.show',$actor->id)}}">{{ $actor->name }}</a>
+                                    <a href="{{route('producers.show',$producer->id)}}">{{ $producer->name }}</a>
                                 </td>
                                 <td>
-                                    @if($actor->sex === 'F')
+                                    @if($producer->sex === 'F')
                                         @php echo 'Female'; @endphp
-                                    @elseif($actor->sex === 'M')
+                                    @elseif($producer->sex === 'M')
                                         @php echo 'Male'; @endphp
                                     @else
                                         @php echo 'Other'; @endphp
                                     @endif
                                 </td>
                                 <td>
-                                    {{ $actor->dob }}
+                                    {{ $producer->dob }}
                                 </td>
                                 <td class="text-justify col-md-4">
-                                    @if(strlen($actor->bio) > 298)
-                                    {{ substr($actor->bio,0,298) }}...<a href="{{url(route('actors.show',$actor->id))}}">More</a>
+                                    @if(strlen($producer->bio) > 298)
+                                    {{ substr($producer->bio,0,298) }}...<a href="{{url(route('producers.show',$producer->id))}}">More</a>
                                     @else
-                                    {{ $actor->bio }}
+                                    {{ $producer->bio }}
                                     @endif
                                 </td>
                             </tr>

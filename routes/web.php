@@ -39,6 +39,17 @@ Route::group(['namespace' => 'Movies','prefix' => 'movies','middleware' => 'auth
     Route::post('/{id}','MoviesController@destroy')->name('movies.destroy');
 });
 
+Route::group(['namespace' => 'Producers','prefix' => 'producers','middleware' => 'auth'],function(){
+    Route::get('/','ProducerController@index')->name('producers.index');
+    Route::get('/create','ProducerController@create')->name('producers.create');
+    Route::post('/create','ProducerController@store')->name('producers.store');
+    Route::get('/{id}','ProducerController@show')->name('producers.show');
+    Route::get('/update/{id}','ProducerController@update')->name('producers.update');
+    Route::put('/update/{id}','ProducerController@put')->name('producers.put');
+    Route::get('/destroy/{id}','ProducerController@delete')->name('producers.delete');
+    Route::post('/{id}','ProducerController@destroy')->name('producers.destroy');
+});
+
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

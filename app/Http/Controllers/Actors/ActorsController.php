@@ -25,15 +25,11 @@ class ActorsController extends Controller
     {
         $actor = new Actors();
 
-        $validation = $request->validate([
+        $request->validate([
             'name' => 'string',
-            'dob' => 'after:2013',
+            'dob' => 'after:1900-01-01',
             'sex' => 'alpha',
         ]);
-
-        if ($validation->fails()) {
-            return $validation->errors();
-        }
 
         $actor->name = $request->name;
         $actor->dob = $request->dob;
@@ -63,15 +59,11 @@ class ActorsController extends Controller
     {
         $actor = Actors::find($id);
 
-        $validation = $request->validate([
+        $request->validate([
             'name' => 'string',
-            'dob' => 'after:2013',
+            'dob' => 'after:1900-01-01',
             'sex' => 'alpha',
         ]);
-
-        if ($validation->fails()) {
-            return $validation->errors();
-        }
 
         $actor->name = $request->name;
         $actor->dob = $request->dob;

@@ -24,7 +24,7 @@
                             <select name="year_of_release" class="form-control">
                                 <option style="background-color: #27293D;" value="-">-- Select --</option>
                                 @foreach($years as $year)
-                                        <option style="background-color: #27293D;" @if((string)$year === $movie->year_of_release) {{ __('selected') }} @endif value="{{ $movie->year_of_release }}">{{ $movie->year_of_release }}</option>
+                                        <option style="background-color: #27293D;" @if((string)$year === $movie->year_of_release) {{ __('selected') }} @else {{__('')}} @endif value="{{ $year }}">{{ $year }}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'year_of_release'])
