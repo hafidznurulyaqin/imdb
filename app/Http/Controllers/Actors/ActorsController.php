@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Actors;
 use App\Actors;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ActorsController extends Controller
 {
@@ -62,8 +64,23 @@ class ActorsController extends Controller
         $request->validate([
             'name' => 'string',
             'dob' => 'after:1900-01-01',
-            'sex' => 'alpha',
+            'sex' => 'alpha'
         ]);
+
+        if ($request->file('img')->isValid()) {
+            //
+            $request->validate([
+                'image' => 'mimes:jpeg,png|max:1014',
+            ]);
+
+            $extension = $request->img->extension();
+
+            $request->img->storeAs('/public', $request->name.".".$extension);
+
+            $url = Storage::url($request->name.".".$extension);
+
+            $actor->img = $url;
+        }
 
         $actor->name = $request->name;
         $actor->dob = $request->dob;

@@ -19,6 +19,7 @@ class CreateActors extends Migration
             $table->string('sex');
             $table->date('dob');
             $table->text('bio');
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

@@ -51,13 +51,13 @@
                                     {{ $movie->plot }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $movie->image }}
+                                    <img class="img-thumbnail" src="{{asset($movie->image)}}" alt="">
                                 </td>
                                 <td class="text-center">
-                                    {{ $movie->image }}
+                                    <img class="card-img" src="{{asset($movie->image)}}" alt="">
                                 </td>
                                 <td class="text-center">
-                                    {{ $movie->image }}
+                                    <img class="figure-img" src="{{asset($movie->image)}}" alt="">
                                 </td>
                             </tr>
                             @endforeach
@@ -68,5 +68,4 @@
             </div>
         </div>
     </div>
-
 @endsection

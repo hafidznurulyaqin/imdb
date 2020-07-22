@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Add New Movies') }}</h5>
                 </div>
-                <form method="post" action="{{ route('movies.store') }}" autocomplete="off">
+                <form method="post" action="{{ route('movies.store') }}" autocomplete="off" enctype="multipart/form-data">
                     <div class="card-body">
                         @csrf
                         @include('alerts.success')
@@ -20,10 +20,10 @@
 
                         <div class="form-group{{ $errors->has('year_of_release') ? ' has-danger' : '' }}">
                             <label>{{ __('Year Of Release') }}</label>
-                            <select name="year_of_release" class="form-control">
-                                <option style="background-color: #27293D;" selected value="-">-- Select --</option>
+                            <select name="year_of_release" class="form-control select2">
+                                <option selected value="-">-- Select --</option>
                                 @foreach($years as $year)
-                                    <option style="background-color: #27293D;" value="{{ $year }}">{{ $year }}</option>
+                                    <option value="{{ $year }}">{{ $year }}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'year_of_release'])
@@ -39,6 +39,17 @@
                             <label>{{ __('Image') }}</label>
                             <input type="file" class="form-control" name="image" value="Upload" placeholder="Upload">
                             @include('alerts.feedback', ['field' => 'image'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('producer') ? ' has-danger' : '' }}">
+                            <label>{{ __('Producer') }}</label>
+                            <select name="producer" class="form-control select2">
+                                <option selected value="-">-- Select --</option>
+                                @foreach($producers as $producer)
+                                    <option value="{{ $producer->id }}">{{ $producer->name }}</option>
+                                @endforeach
+                            </select>
+                            @include('alerts.feedback', ['field' => 'producer'])
                         </div>
                     </div>
                     <div class="card-footer">

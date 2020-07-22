@@ -11,7 +11,7 @@
                         <div class="block block-three"></div>
                         <div class="block block-four"></div>
                         <a href="#">
-                            <img class="avatar" src="{{ asset('black') }}/img/default-avatar.png" alt="">
+                            <img class="img-holder" src="{{asset($actor->image)}}" alt="">
                             <h5 class="title">{{ $actor->name }}</h5>
                         </a>
                 <p class="description">

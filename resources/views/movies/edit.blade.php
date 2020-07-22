@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Update Movies') }}</h5>
                 </div>
-                <form method="post" action="{{ route('movies.put',$movie->id) }}" autocomplete="off">
+                <form method="post" action="{{ route('movies.put',$movie->id) }}" autocomplete="off" enctype="multipart/form-data">
                     <div class="card-body">
                         @csrf
                         @method('put')
@@ -21,7 +21,7 @@
 
                         <div class="form-group{{ $errors->has('year_of_release') ? ' has-danger' : '' }}">
                             <label>{{ __('Year Of Release') }}</label>
-                            <select name="year_of_release" class="form-control">
+                            <select name="year_of_release" class="form-control select2">
                                 <option style="background-color: #27293D;" value="-">-- Select --</option>
                                 @foreach($years as $year)
                                         <option style="background-color: #27293D;" @if((string)$year === $movie->year_of_release) {{ __('selected') }} @else {{__('')}} @endif value="{{ $year }}">{{ $year }}</option>
@@ -40,6 +40,17 @@
                             <label>{{ __('Image') }}</label>
                             <input type="file" class="form-control" name="image" value="Upload" placeholder="Upload">
                             @include('alerts.feedback', ['field' => 'image'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('producer') ? ' has-danger' : '' }}">
+                            <label>{{ __('Producer') }}</label>
+                            <select name="producer" class="form-control select2">
+                                <option selected value="-">-- Select --</option>
+                                @foreach($producers as $producer)
+                                    <option value="{{ $producer->id }}">{{ $producer->name }}</option>
+                                @endforeach
+                            </select>
+                            @include('alerts.feedback', ['field' => 'producer'])
                         </div>
                     </div>
                     <div class="card-footer">
