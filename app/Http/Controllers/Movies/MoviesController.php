@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Movies;
 
 use App\Producer;
-use App\ProducersMovies;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Movies;
@@ -31,18 +30,16 @@ class MoviesController extends Controller
     public function store(Request $request)
     {
         $movie = new Movies();
-        $producerMovies = new ProducersMovies();
 
-
-        if($request->has('image'))
+        if($request->has('img'))
         {
-            if ($request->file('image')->isValid()) {
+            if ($request->file('img')->isValid()) {
                 //
                 $request->validate([
                     'image' => 'mimes:jpeg,png|max:1014',
                 ]);
 
-                $extension = $request->image->extension();
+                $extension = $request->img->extension();
 
                 $request->image->storeAs('/public', $request->name.".".$extension);
 
@@ -55,16 +52,9 @@ class MoviesController extends Controller
         $movie->name = $request->name;
         $movie->year_of_release = $request->year_of_release;
         $movie->plot = $request->plot;
+        $movie->producer_id = $request->producer;
 
         $movie->save();
-
-        if($request->has('producer'))
-        {
-            $producerMovies->producer_id = $request->producer;
-            $producerMovies->movies_id = $movie->id;
-            $producerMovies->save();
-        }
-
 
         return redirect(route('movies.index'))->with(['success' => 'Movies Successfully created']);
     }
@@ -90,7 +80,6 @@ class MoviesController extends Controller
     public function put(Request $request,$id)
     {
         $movie = Movies::find($id);
-        $producerMovies = ProducersMovies::where('movies_id',$id)->first();
 
         if($request->has('image'))
         {
@@ -113,23 +102,9 @@ class MoviesController extends Controller
         $movie->name = $request->name;
         $movie->year_of_release = $request->year_of_release;
         $movie->plot = $request->plot;
+        $movie->producer_id = $request->producer;
 
         $movie->update();
-
-        if($request->has('producer'))
-        {
-            if($producerMovies === null)
-            {
-                $producerMovies = new ProducersMovies();
-
-                $producerMovies->producer_id = $request->producer;
-                $producerMovies->movies_id = $movie->id;
-                $producerMovies->save();
-            } else {
-                $producerMovies->producer_id = $request->producer;
-                $producerMovies->update();
-            }
-        }
 
         return redirect(route('movies.index'))->with(['success' => 'Movies Successfully updated']);
     }

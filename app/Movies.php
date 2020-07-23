@@ -13,4 +13,9 @@ class Movies extends Model
     {
         return $this->belongsToMany('App\Actors');
     }
+
+    public function producer()
+    {
+        return $this->belongsTo('App\Producer');
+    }
 }

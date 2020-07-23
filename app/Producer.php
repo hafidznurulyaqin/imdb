@@ -8,4 +8,9 @@ class Producer extends Model
 {
     //
     public $guarded = ['id'];
+
+    public function movies()
+    {
+        return $this->hasMany('App\Movies');
+    }
 }

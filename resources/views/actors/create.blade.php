@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h5 class="title">{{ __('Add New Actors') }}</h5>
                 </div>
-                <form method="post" action="{{ route('actors.store') }}" autocomplete="off">
+                <form method="post" action="{{ route('actors.store') }}" autocomplete="off" enctype="multipart/form-data">
                     <div class="card-body">
                         @csrf
                         @include('alerts.success')
@@ -38,6 +38,12 @@
                         <div class="form-group{{ $errors->has('bio') ? ' has-danger' : '' }}">
                             <label>{{ __('Biography') }}</label>
                             <textarea name="bio" class="form-control{{ $errors->has('bio') ? ' is-invalid' : '' }}" placeholder="{{ __('Biography') }}" value=""></textarea>
+                            @include('alerts.feedback', ['field' => 'bio'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('img') ? ' has-danger' : '' }}">
+                            <label>{{ __('Image') }}</label>
+                            <input type="file" class="form-control" name="img" size="60" />
                             @include('alerts.feedback', ['field' => 'bio'])
                         </div>
                     </div>

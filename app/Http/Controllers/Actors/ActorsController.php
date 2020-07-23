@@ -33,6 +33,25 @@ class ActorsController extends Controller
             'sex' => 'alpha',
         ]);
 
+        if($request->has('img'))
+        {
+            if ($request->file('img')->isValid()) {
+                //
+                $request->validate([
+                    'img' => 'mimes:jpeg,png|max:1014',
+                ]);
+
+                $extension = $request->img->extension();
+
+                $request->img->storeAs('/public', $request->name.".".$extension);
+
+                $url = Storage::url($request->name.".".$extension);
+
+                $actor->img = $url;
+            }
+        }
+
+
         $actor->name = $request->name;
         $actor->dob = $request->dob;
         $actor->sex = $request->sex;
@@ -67,20 +86,24 @@ class ActorsController extends Controller
             'sex' => 'alpha'
         ]);
 
-        if ($request->file('img')->isValid()) {
-            //
-            $request->validate([
-                'image' => 'mimes:jpeg,png|max:1014',
-            ]);
+        if($request->has('img'))
+        {
+            if ($request->file('img')->isValid()) {
+                //
+                $request->validate([
+                    'img' => 'mimes:jpeg,png|max:1014',
+                ]);
 
-            $extension = $request->img->extension();
+                $extension = $request->img->extension();
 
-            $request->img->storeAs('/public', $request->name.".".$extension);
+                $request->img->storeAs('/public', $request->name.".".$extension);
 
-            $url = Storage::url($request->name.".".$extension);
+                $url = Storage::url($request->name.".".$extension);
 
-            $actor->img = $url;
+                $actor->img = $url;
+            }
         }
+
 
         $actor->name = $request->name;
         $actor->dob = $request->dob;

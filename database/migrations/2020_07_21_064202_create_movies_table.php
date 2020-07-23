@@ -15,6 +15,7 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('producer_id');
             $table->string('name');
             $table->string('year_of_release');
             $table->string('plot');
