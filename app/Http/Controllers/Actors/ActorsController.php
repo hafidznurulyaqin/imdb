@@ -27,6 +27,11 @@ class ActorsController extends Controller
     {
         $actor = new Actors();
 
+        /**
+         * Only Receive string for the name
+         * DOB only available after year 1900
+         * Sex is only accept Alphabet
+         */
         $request->validate([
             'name' => 'string',
             'dob' => 'after:1900-01-01',
@@ -80,6 +85,11 @@ class ActorsController extends Controller
     {
         $actor = Actors::find($id);
 
+        /**
+         * Only Receive string for the name
+         * DOB only available after year 1900
+         * Sex is only accept Alphabet
+         */
         $request->validate([
             'name' => 'string',
             'dob' => 'after:1900-01-01',

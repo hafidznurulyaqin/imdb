@@ -51,6 +51,16 @@
                             </select>
                             @include('alerts.feedback', ['field' => 'producer'])
                         </div>
+
+                        <div class="form-group{{ $errors->has('actors') ? ' has-danger' : '' }}">
+                            <label>{{ __('Actors') }}</label>
+                            <select name="actors[]" class="form-control select2" multiple="multiple">
+                                @foreach($actors as $actor)
+                                    <option value="{{ $actor->id }}">{{ $actor->name }}</option>
+                                @endforeach
+                            </select>
+                            @include('alerts.feedback', ['field' => 'actors[]'])
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-fill btn-primary">{{ __('Save') }}</button>

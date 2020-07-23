@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Movies;
 
+use App\ActorMovies;
+use App\Actors;
 use App\Producer;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -13,7 +15,7 @@ class MoviesController extends Controller
     //
     public function index()
     {
-        $movie = Movies::paginate(15);
+        $movie = Movies::with('producer','actorMovies')->paginate(15);
 
         return view('movies.index',['movies' => $movie]);
     }
@@ -24,7 +26,9 @@ class MoviesController extends Controller
 
         $producers = Producer::all();
 
-        return view('movies.create',['years' => $years,'producers' => $producers]);
+        $actors = Actors::all();
+
+        return view('movies.create',['years' => $years,'producers' => $producers,'actors' => $actors]);
     }
 
     public function store(Request $request)
@@ -53,10 +57,22 @@ class MoviesController extends Controller
         $movie->year_of_release = $request->year_of_release;
         $movie->plot = $request->plot;
         $movie->producer_id = $request->producer;
-
         $movie->save();
 
-        return redirect(route('movies.index'))->with(['success' => 'Movies Successfully created']);
+        if($request->has('actors'))
+        {
+            $actors = $request->actors;
+
+            foreach($actors as $actor)
+            {
+                $newActorMovies = new ActorMovies();
+                $newActorMovies->actor_id = $actor;
+                $newActorMovies->movies_id = $movie->id;
+                $newActorMovies->save();
+            }
+        }
+
+        return redirect(route('movies.index'))->with(['status' => 'Movies Successfully created']);
     }
 
     public function show($id)
@@ -74,7 +90,11 @@ class MoviesController extends Controller
 
         $producers = Producer::all();
 
-        return view('movies.edit',['movie' => $movie,'years'=> $years,'producers' => $producers]);
+        $actors = Actors::all();
+
+        $actorMovies = ActorMovies::where('movies_id',$id)->pluck('id')->toArray();
+
+        return view('movies.edit',['movie' => $movie,'years'=> $years,'producers' => $producers,'actors'=> $actors,'actor_movies' => $actorMovies]);
     }
 
     public function put(Request $request,$id)
@@ -106,13 +126,26 @@ class MoviesController extends Controller
 
         $movie->update();
 
-        return redirect(route('movies.index'))->with(['success' => 'Movies Successfully updated']);
+        if($request->has('actors'))
+        {
+            $actors = $request->actors;
+            ActorMovies::where('movies_id',$movie->id)->delete();
+            foreach($actors as $actor)
+            {
+                $newActorMovies = new ActorMovies();
+                $newActorMovies->actor_id = $actor;
+                $newActorMovies->movies_id = $movie->id;
+                $newActorMovies->save();
+            }
+        }
+
+        return redirect(route('movies.index'))->with(['status' => 'Movies Successfully updated']);
     }
 
     public function delete($id)
     {
         Movies::destroy($id);
 
-        return redirect(route('movies.index'))->with(['success' => 'Movies Successfully deleted']);
+        return redirect(route('movies.index'))->with(['status' => 'Movies Successfully deleted']);
     }
 }

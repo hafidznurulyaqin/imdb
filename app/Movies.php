@@ -18,4 +18,10 @@ class Movies extends Model
     {
         return $this->belongsTo('App\Producer');
     }
+
+    public function actorMovies()
+    {
+        return $this->hasMany('App\ActorMovies','movies_id');
+    }
+
 }

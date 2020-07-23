@@ -14,6 +14,7 @@
                     <a href="{{route('movies.create')}}" class="btn btn-fill btn-primary float-right">{{ __('Add') }}</a>
                 </div>
                 <div class="card-body">
+                    @include('alerts.success')
                     <div class="table-responsive">
                         <table class="table tablesorter " id="">
                             <thead class=" text-primary">
@@ -53,11 +54,13 @@
                                 <td class="text-center">
                                     <img class="img-thumbnail" src="{{asset($movie->image)}}" alt="">
                                 </td>
-                                <td class="text-center">
-                                    <img class="card-img" src="{{asset($movie->image)}}" alt="">
+                                <td>
+                                    {{ $movie->producer->name }}
                                 </td>
-                                <td class="text-center">
-                                    <img class="figure-img" src="{{asset($movie->image)}}" alt="">
+                                <td>
+                                    @foreach($movie->actorMovies as $actMovie)
+                                        {{ \App\Actors::find($actMovie->actor_id)->name }}
+                                    @endforeach
                                 </td>
                             </tr>
                             @endforeach

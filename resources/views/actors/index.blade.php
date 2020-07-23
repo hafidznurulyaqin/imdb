@@ -14,6 +14,7 @@
                     <a href="{{route('actors.create')}}" class="btn btn-fill btn-primary float-right">{{ __('Add') }}</a>
                 </div>
                 <div class="card-body">
+                    @include('alerts.success')
                     <div class="table-responsive">
                         <table class="table tablesorter " id="">
                             <thead class=" text-primary">

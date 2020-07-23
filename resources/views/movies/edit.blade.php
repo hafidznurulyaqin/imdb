@@ -47,10 +47,20 @@
                             <select name="producer" class="form-control select2">
                                 <option selected value="-">-- Select --</option>
                                 @foreach($producers as $producer)
-                                    <option value="{{ $producer->id }}">{{ $producer->name }}</option>
+                                    <option @if($movie->producer_id === $producer->id){{ __('selected') }} @endif value="{{ $producer->id }}">{{ $producer->name }}</option>
                                 @endforeach
                             </select>
                             @include('alerts.feedback', ['field' => 'producer'])
+                        </div>
+
+                        <div class="form-group{{ $errors->has('actors') ? ' has-danger' : '' }}">
+                            <label>{{ __('Actors') }}</label>
+                            <select name="actors[]" class="form-control select2" multiple="multiple">
+                                @foreach($actors as $i => $actor)
+                                    <option @if(in_array($actor->id,$actor_movies)) {{__('selected')}} @endif value="{{ $actor->id }}">{{ $actor->name }}</option>
+                                @endforeach
+                            </select>
+                            @include('alerts.feedback', ['field' => 'actors[]'])
                         </div>
                     </div>
                     <div class="card-footer">
